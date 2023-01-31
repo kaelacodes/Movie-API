@@ -12,7 +12,124 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname,'log.txt'), {fl
 
 app.use(bodyParser.json());
 app.use(express.static('public'));
-app.use(morgan('combined', {stream: accessLogStream}));
+app.use(morgan('common', {stream: accessLogStream}));
+
+let movies = [
+    {
+        "title": "Everything Everywhere All at Once",
+        "movie_description": "placeholder",
+        "release_year": "2022",
+        "movie_genres": [
+            { 
+                "genre": "Adventure",
+                "descriptionUrl": "placeholder"
+            },
+            { 
+                "genre": "Sci-Fi",
+                "descriptionUrl": "placeholder",
+            }
+        ],
+        "movie_director":
+        [
+            { 
+                "name": "Daniel Kwan",
+                "bioUrl": "placeholder"
+            },
+            { 
+                "director_name": "Daniel Schneinert",
+                "bioUrl": "placeholder",
+            }
+        ],
+        "imageUrl": "link to image"
+    },
+    {
+        "title": "The Banshees of Inisherin",
+        "movie_description": "placeholder",
+        "release_year": "2022",
+        "movie_genres": [
+            { 
+                "genre": "Comedy",
+                "descriptionUrl": "placeholder"
+            },
+            { 
+                "genre": "Drama",
+                "descriptionUrl": "placeholder",
+            }
+        ],
+        "movie_director": {
+            "name": "Martin McDonagh",
+            "bioUrl": "placeholder"
+        },
+        "imageUrl": "link to image"
+    }
+];
+
+let genres = [
+    {
+        "genre_name" : "Adventure",
+        "genre_description": "placeholder dexcription"
+    },
+    {
+        "genre_name" : "Comedy",
+        "genre_description": "placeholder dexcription"
+    },
+    {
+        "genre_name" : "Drama",
+        "genre_description": "placeholder dexcription"
+    },
+    {
+        "genre_name" : "Sci-Fi",
+        "genre_description": "placeholder dexcription"
+    }
+];
+
+let directors = [
+    {
+        "director_name": "placeholder name",
+        "bio": "placeholder bio",
+        "birth year": "0000",
+        "death year": "0000"
+    },
+    {
+        "director_name": "placeholder name",
+        "bio": "placeholder bio",
+        "birth year": "0000",
+        "death year": "0000"
+    },
+    {
+        "director_name": "placeholder name",
+        "bio": "placeholder bio",
+        "birth year": "0000",
+        "death year": "0000"
+    }
+];
+
+let users = [
+    {
+        "userID": 1,
+        "first_name": "Anne",
+        "last_name": "Brown",
+        "username": "anne234",
+        "email_address": "anne234@email.com",
+        "favorite_movies": []
+    },
+    {
+        "userID": 2,
+        "first_name": "George",
+        "last_name": "Smith",
+        "username": "george_smith",
+        "email_address": "george_smith@email.com",
+        "favorite_movies": []
+    },
+    {
+        "userID": 3,
+        "first_name": "Lucy",
+        "last_name": "Doe",
+        "username": "LucyGoosey84",
+        "email_address": "lucygoosey84@email.com",
+        "favorite_movies": []
+    }
+];
 
 //GET request for default resposnse at "/" endpoint
 app.get('/', (req, res) => {
@@ -21,22 +138,22 @@ app.get('/', (req, res) => {
 
 //GET request for all movies
 app.get('/movies', (req, res) => {
-    res.send('Successful GET request returning data on all movies.');
+    res.send('Successful GET request for all movies')
 });
 
 //GET request for a specific movie by title
-app.get('/movies/[title]', (req, res) => {
-    res.send('Successful GET request returning data on ' + title + '.');
+app.get('/movies/:title', (req, res) => {
+    res.send('Successful GET request returning data on the requestd title.');
 });
 
 //GET request for data about a specific genre
-app.get('/genres/[genre]', (req, res) => {
-    res.send('Successful GET request returning data about the ' + genre + ' genre.');
+app.get('/genres/:genre', (req, res) => {
+    res.send('Successful GET request returning data about the requested genre.');
 });
 
 //GET request for data on a specific director
-app.get('directors/[director_name]', (req, res) => {
-    res.send('Successful GET request returning data about ' + director_name + '.');
+app.get('directors/:director_name', (req, res) => {
+    res.send('Successful GET request returning data about the requested director.');
 });
 
 //POST request to add new user account
@@ -45,22 +162,22 @@ app.post('/users', (req, res) => {
 });
 
 //PUT request to update user information
-app.put('/users/[user]', (req, res) => {
+app.put('/users/:userID', (req, res) => {
     res.send('Successfully updated user information.');
 });
 
 //POST request to add movie to users list of favorite movies
-app.post('users/[user]/favorites', (req, res) => {
+app.post('users/:userID/favorite_movies', (req, res) => {
     res.send('Successfully added movie to users favorites list.');
 });
 
 //DELETE request to remove movie from users list of favorite movies
-app.delete('users/[user]/favorites', (req, res) => {
+app.delete('users/:userID/favorite_movies', (req, res) => {
     res.send('Successfully removed movie from users favorites list.');
 });
 
 //DELETE request to remove existing user account
-app.delete('/users', (req, res) => {
+app.delete('/users/:userID', (req, res) => {
     res.send('Successfully removed user account.')
 })
 
