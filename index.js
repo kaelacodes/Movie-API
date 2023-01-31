@@ -3,22 +3,10 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     morgan = require('morgan'),
     fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    uuid = require('uuid');
 
 const app = express();
-
-let topTenMovies = [
-    {title: 'Happy Gilmore'},
-    {title: 'Step Brothers'},
-    {title: 'Shawshank Redemption'},
-    {title: 'The Banshees of Inisherin'},
-    {title: 'Psycho'},
-    {title: 'Some Like It Hot'},
-    {title: 'Pulp Fiction'},
-    {title: 'I Am Legend'},
-    {title: 'Pretty In Pink'},
-    {title: 'Everything, Everywhere, All At Once'}
-];
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname,'log.txt'), {flags:'a'});
 
@@ -31,10 +19,50 @@ app.get('/', (req, res) => {
     res.send('Welcome to MyFlix!');
 });
 
-//GET request for topTenMovies
-app.get('/movies', (req,res) => {
-    res.json(topTenMovies);
+//GET request for all movies
+app.get('/movies', (req, res) => {
+    res.send('Successful GET request returning data on all movies.');
 });
+
+//GET request for a specific movie by title
+app.get('/movies/[title]', (req, res) => {
+    res.send('Successful GET request returning data on ' + title + '.');
+});
+
+//GET request for data about a specific genre
+app.get('/genres/[genre]', (req, res) => {
+    res.send('Successful GET request returning data about the ' + genre + ' genre.');
+});
+
+//GET request for data on a specific director
+app.get('directors/[director_name]', (req, res) => {
+    res.send('Successful GET request returning data about ' + director_name + '.');
+});
+
+//POST request to add new user account
+app.post('/users', (req, res) => {
+    res.send('Successfully added new user account.');
+});
+
+//PUT request to update user information
+app.put('/users/[user]', (req, res) => {
+    res.send('Successfully updated user information.');
+});
+
+//POST request to add movie to users list of favorite movies
+app.post('users/[user]/favorites', (req, res) => {
+    res.send('Successfully added movie to users favorites list.');
+});
+
+//DELETE request to remove movie from users list of favorite movies
+app.delete('users/[user]/favorites', (req, res) => {
+    res.send('Successfully removed movie from users favorites list.');
+});
+
+//DELETE request to remove existing user account
+app.delete('/users', (req, res) => {
+    res.send('Successfully removed user account.')
+})
 
 // error handler comes after all route calls and app.use, but before app.listen
 app.use((err,req,res,next) => {
