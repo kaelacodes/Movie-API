@@ -85,19 +85,19 @@ let genres = [
 
 let directors = [
     {
-        "director_name": "placeholder name",
+        "name": "placeholder name",
         "bio": "placeholder bio",
         "birth year": "0000",
         "death year": "0000"
     },
     {
-        "director_name": "placeholder name",
+        "name": "placeholder name",
         "bio": "placeholder bio",
         "birth year": "0000",
         "death year": "0000"
     },
     {
-        "director_name": "placeholder name",
+        "name": "placeholder name",
         "bio": "placeholder bio",
         "birth year": "0000",
         "death year": "0000"
@@ -152,7 +152,7 @@ app.get('/genres/:genre', (req, res) => {
 });
 
 //GET request for data on a specific director
-app.get('directors/:director_name', (req, res) => {
+app.get('/directors/:name', (req, res) => {
     res.send('Successful GET request returning data about the requested director.');
 });
 
@@ -167,12 +167,12 @@ app.put('/users/:userID', (req, res) => {
 });
 
 //POST request to add movie to users list of favorite movies
-app.post('users/:userID/favorite_movies', (req, res) => {
+app.post('/users/:userID/favorite_movies', (req, res) => {
     res.send('Successfully added movie to users favorites list.');
 });
 
 //DELETE request to remove movie from users list of favorite movies
-app.delete('users/:userID/favorite_movies', (req, res) => {
+app.delete('/users/:userID/favorite_movies', (req, res) => {
     res.send('Successfully removed movie from users favorites list.');
 });
 
