@@ -71,36 +71,36 @@ let genres = [
     },
     {
         "genre_name" : "Comedy",
-        "genre_description": "placeholder dexcription"
+        "genre_description": "Comedy is a genre of fiction that consists of discourses or works intended to be humorous or amusing by inducing laughter."
     },
     {
         "genre_name" : "Drama",
-        "genre_description": "placeholder dexcription"
+        "genre_description": "The drama genre features stories with high stakes and many conflicts. They're plot-driven and demand that every character and scene move the story forward. Dramas follow a clearly defined narrative plot structure, portraying real-life scenarios or extreme situations with emotionally-driven characters."
     },
     {
         "genre_name" : "Sci-Fi",
-        "genre_description": "placeholder dexcription"
+        "genre_description": "Science fiction, popularly shortened as sci-fi, is a genre of fiction that creatively depicts real or imaginary science and technology as part of its plot, setting, or theme. The fiction part of science fiction means, of course, that it's a fictional story—not a real-life account."
     }
 ];
 
 let directors = [
     {
-        "name": "placeholder name",
-        "bio": "placeholder bio",
-        "birth year": "0000",
-        "death year": "0000"
+        "name": "Quentin Tarantino",
+        "bio": "Quentin Tarantino is an American film director, writer, producer, and actor. His films are characterized by frequent references to popular culture and film genres, non-linear storylines, dark humor, stylized violence, extended dialogue, pervasive use of profanity, cameos and ensemble casts.",
+        "birth year": "1963",
+        "death year": null
     },
     {
-        "name": "placeholder name",
-        "bio": "placeholder bio",
-        "birth year": "0000",
-        "death year": "0000"
+        "name": "Martin Scorsese",
+        "bio": "is an American film director, producer, screenwriter and actor. Scorsese emerged as one of the major figures of the New Hollywood era. He is the recipient of many major accolades, including an Academy Award, four BAFTA Awards, three Emmy Awards, a Grammy Award, three Golden Globe Awards, and two Directors Guild of America Awards. He has been honored with the AFI Life Achievement Award in 1997, the Film Society of Lincoln Center tribute in 1998, the Kennedy Center Honor in 2007, the Cecil B. DeMille Award in 2010, and the BAFTA Fellowship in 2012. Five of his films have been inducted into the National Film Registry by the Library of Congress as 'culturally, historically or aesthetically significant'.",
+        "birth year": "1942",
+        "death year": null
     },
     {
-        "name": "placeholder name",
-        "bio": "placeholder bio",
-        "birth year": "0000",
-        "death year": "0000"
+        "name": "Alfred Hitchcock",
+        "bio": "Sir Alfred Hitchcock was an English filmmaker. He is widely regarded as one of the most influential figures in the history of cinema.[1] In a career spanning six decades, he directed over 50 feature films,[a] many of which are still widely watched and studied today. Known as the 'Master of Suspense', he became as well known as any of his actors thanks to his many interviews, his cameo roles in most of his films, and his hosting and producing the television anthology Alfred Hitchcock Presents (1955–65). His films garnered 46 Academy Award nominations, including six wins, although he never won the award for Best Director despite five nominations.",
+        "birth year": "1899",
+        "death year": "1980"
     }
 ];
 
