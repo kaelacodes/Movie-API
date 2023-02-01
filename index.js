@@ -138,32 +138,46 @@ app.get('/', (req, res) => {
 
 //GET request for all movies
 app.get('/movies', (req, res) => {
-    res.send('Successful GET request for all movies')
+    res.json(movies);
 });
 
 //GET request for a specific movie by title
 app.get('/movies/:title', (req, res) => {
-    res.send('Successful GET request returning data on the requestd title.');
+    res.json(movies.find((movie) => {
+        return movie.title === req.params.title
+    }));
 });
 
 //GET request for data about a specific genre
 app.get('/genres/:genre_name', (req, res) => {
-    res.send('Successful GET request returning data about the requested genre.');
+    res.json(genres.find((genre) => {
+        return genre === req.params.genre
+    }));
 });
 
 //GET request for data on a specific director
 app.get('/directors/:name', (req, res) => {
-    res.send('Successful GET request returning data about the requested director.');
+    res.json(directors.find((director) => {
+        return director === req.params.director
+    }));
 });
 
 //POST request to add new user account
 app.post('/users', (req, res) => {
-    res.send('Successfully added new user account.');
+    let newUser = req.body;
+    if (!newUser.name){
+        const message = 'Missing name in request body';
+        res.status(400).send(message);
+    } else {
+        newUser.id = uuidv4();
+        users.push(newUser);
+        res.status(201).send(newUser);
+    }
 });
 
 //PUT request to update user information
 app.put('/users/:userID', (req, res) => {
-    res.send('Successfully updated user information.');
+    res.send('Successfully updated user information');
 });
 
 //POST request to add movie to users list of favorite movies
