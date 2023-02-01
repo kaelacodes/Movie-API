@@ -67,7 +67,7 @@ let movies = [
 let genres = [
     {
         "genre_name" : "Adventure",
-        "genre_description": "placeholder dexcription"
+        "genre_description": "Adventure film is a genre that revolves around the conquests and explorations of a protagonist. The purpose of the conquest can be to retrieve a person or treasure, but often the main focus is simply the pursuit of the unknown. These films generally take place in exotic locations and play on historical myths."
     },
     {
         "genre_name" : "Comedy",
@@ -147,7 +147,7 @@ app.get('/movies/:title', (req, res) => {
 });
 
 //GET request for data about a specific genre
-app.get('/genres/:genre', (req, res) => {
+app.get('/genres/:genre_name', (req, res) => {
     res.send('Successful GET request returning data about the requested genre.');
 });
 

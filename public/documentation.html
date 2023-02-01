@@ -3,26 +3,170 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="styles.css">
         <title>Movie API | Documentation</title>
     </head>
     <body>
         <main>
             <h1>Movie API | Documentation</h1>
-            <h2>Objective:</h2>
-            <p>To build the server-side component of a “movies” web application. The web
-                application will provide users with access to information about different
-                movies, directors, and genres. Users will be able to sign up, update their
-                personal information, and create a list of their favorite movies.</p>
-            <h2>Endpoints:</h2>
-            <p>/movies - Returns a list of all movies via GET method</p>
-            <p>/movies/[title] - Returns data to the user about a specific movie by title via GET method</p>
-            <p>/genres/[genre] - Returns data about a genre via GET method</p>
-            <p>/directors/[director_name] - Returns data (bio, birth year, death year) about a specific director via GET method</p>
-            <p>/users - Allows new user to register via POST method</p>
-            <p>/users/[user] - Allows user to update user information (username, email, password)</p>
-            <p>/users/[user]/favorites - Allows users to add a movie to their favorites (showing only text that a movie has been added) via POST method</p>
-            <p>/users/[user]/favorites - Allows users to remove a movie from their favorites (showing only text that a movie has been removed) via DELETE method</p>
-            <p>/users - Allows existing users to deregister (showing only a text that user account has been removed) via DELETE method</p>
+                <div class="objective">
+                    <h2>Objective:</h2>
+                        <p>To build the server-side component of a “movies” web application. The web
+                        application will provide users with access to information about different
+                        movies, directors, and genres. Users will be able to sign up, update their
+                        personal information, and create a list of their favorite movies.</p>
+                </div>
+                <div class="features">
+                    <h2>Features:</h2>
+                        <ul>
+                            <li>Returns a list of ALL movies to the user</li>
+                            <li>Returns data (description, genre, director, image URL) about a specific movie by title to the user</li>
+                            <li>Returns data about a genre by name</li>
+                            <li>Returns data about a specific director (bio, birth year, death year) by name</li>
+                            <li>Allows new users to register a user account</li>
+                            <li>Allows users to update their user account information</li>
+                            <li>Allows users to add a movie to their list of favorite movies</li>
+                            <li>Allows users to remove a movie from their list of favorite movies</li>
+                            <li>Allows existing users to deregister their user account</li>
+                        </ul>
+                </div>
+                <div class="endpoints">
+                    <h2>Endpoints:</h2>
+                    <table class="endpoint-table">
+                        <thead>
+                            <tr>
+                                <th>Business Logic</th>
+                                <th>URL</th>
+                                <th>HTTP Method</th>
+                                <th>Query Parameters</th>
+                                <th>Request Body Data Format</th>
+                                <th>Response Body Data Format</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Returns a list of all movies and their information</td>
+                                <td>/movies</td>
+                                <td>GET</td>
+                                <td>None</td>
+                                <td>None</td>
+                                <td>
+                                    <p>A JSON object holding data about all movies</p>
+                                    <p class="format-example">Example:</p>
+                                    <img src="img/SingleMovie.jpg" alt="format example">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Returns data about a specific movie by title</td>
+                                <td>/movies/:title</td>
+                                <td>GET</td>
+                                <td>:title</td>
+                                <td>None</td>
+                                <td>
+                                    <p>A JSON object holding information about a specific movie</p>
+                                    <p class="format-example">Example:</p>
+                                    <img src="img/SingleMovie.jpg" alt="format example">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Returns data about a specific genre of movie by genre name</td>
+                                <td>/genres/:genre_name</td>
+                                <td>GET</td>
+                                <td>:genre_name</td>
+                                <td>None</td>
+                                <td>
+                                    <p>A JSON object holding information about a specific genre of movie</p>
+                                    <p class="format-example">Example:</p>
+                                    <img src="img/SingleGenre.jpg" alt="format example">
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Returns data about a specific director by name</td>
+                                <td>/directors/:name</td>
+                                <td>GET</td>
+                                <td>:name</td>
+                                <td>None</td>
+                                <td>
+                                    <p>A JSON object holding data about a specific director</p>
+                                    <p class="format-example">Example:</p>
+                                    <img src="img/SingleDirector.jpg" alt="format example">
+                                </td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Allows new user to register a user account with a unique userID</td>
+                                <td>/users</td>
+                                <td>POST</td>
+                                <td>None</td>
+                                <td>
+                                    <p class="format-example">Example:</p>
+                                    <img src="img/SingleUser.jpg" alt="format example">
+                                </td>
+                                <td>
+                                    <p>A text message confirming to user that their account has been created</p>
+                                    <p class="format-example">Example: 'Successfully added new user account.'</p>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Allows user to update their account information</td>
+                                <td>/users/:userID</td>
+                                <td>PUT</td>
+                                <td>:userID</td>
+                                <td>
+                                    <p class="format-example">Example:</p>
+                                    <img src="img/SingleUser.jpg" alt="format example">
+                                </td>
+                                <td>
+                                    <p>A text message confirming to user that their account has been updated</p>
+                                    <p class="format-example">Example: 'Successfully updated user account information.'</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Allows existing user to deregister their account</td>
+                                <td>/users/:userID</td>
+                                <td>DELETE</td>
+                                <td>:userID</td>
+                                <td>None</td>
+                                <td>
+                                    <p>A text message confirming to user that their account has been removed</p>
+                                    <p class="format-example">Example: 'Successfully removed user account.'</p>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Allows user to to add a movie to their list of favorite movies</td>
+                                <td>/users/:userID/favorite_movies</td>
+                                <td>POST</td>
+                                <td>:userID</td>
+                                <td>
+                                    <p class="format-example">Example:</p>
+                                    <img src="img/SingleMovie.jpg" alt="format example">
+                                </td>
+                                <td>
+                                    <p>A text message confirming to user that the movie has been added to their list of favorite movies</p>
+                                    <p class="format-example">Example: 'Successfully added movie to your favorite movies.'</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Allows user to to remove a movie from their list of favorite movies</td>
+                                <td>/users/:userID/favorite_movies</td>
+                                <td>DELETE</td>
+                                <td>:userID</td>
+                                <td>None</td>
+                                <td>
+                                    <p>A text message confirming to user that the movie has been removed from their list of favorite movies</p>
+                                    <p class="format-example">Example: 'Successfully removed movie from your favorite movies.'</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                   </div>       
         </main>
         <footer></footer>
     </body>
