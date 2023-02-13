@@ -8,128 +8,21 @@ const express = require('express'),
 
 const app = express();
 
+//Integrates Mongoose and defined models into REST API
+const mongoose = require('mongoose');
+const Models = require ('./models.js');
+
+const Movies = Models.Movie;
+const Users = Models.User;
+
+//allows Mongoose to connect to MongoDB database
+mongoose.connect('mongodb://localhost:27017/myFlixApp'), {useNewUrlParser: true, useUnifiedTopology: true};
+
 const accessLogStream = fs.createWriteStream(path.join(__dirname,'log.txt'), {flags:'a'});
 
 app.use(bodyParser.json());
 app.use(express.static('public'));
 app.use(morgan('common', {stream: accessLogStream}));
-
-let movies = [
-    {
-        "title": "Everything Everywhere All at Once",
-        "movie_description": "placeholder",
-        "release_year": "2022",
-        "movie_genres": [
-            { 
-                "genre": "Adventure",
-                "descriptionUrl": "placeholder"
-            },
-            { 
-                "genre": "Sci-Fi",
-                "descriptionUrl": "placeholder",
-            }
-        ],
-        "movie_director":
-        [
-            { 
-                "name": "Daniel Kwan",
-                "bioUrl": "placeholder"
-            },
-            { 
-                "director_name": "Daniel Schneinert",
-                "bioUrl": "placeholder",
-            }
-        ],
-        "imageUrl": "link to image"
-    },
-    {
-        "title": "The Banshees of Inisherin",
-        "movie_description": "placeholder",
-        "release_year": "2022",
-        "movie_genres": [
-            { 
-                "genre": "Comedy",
-                "descriptionUrl": "placeholder"
-            },
-            { 
-                "genre": "Drama",
-                "descriptionUrl": "placeholder",
-            }
-        ],
-        "movie_director": {
-            "name": "Martin McDonagh",
-            "bioUrl": "placeholder"
-        },
-        "imageUrl": "link to image"
-    }
-];
-
-let genres = [
-    {
-        "genre_name" : "Adventure",
-        "genre_description": "Adventure film is a genre that revolves around the conquests and explorations of a protagonist. The purpose of the conquest can be to retrieve a person or treasure, but often the main focus is simply the pursuit of the unknown. These films generally take place in exotic locations and play on historical myths."
-    },
-    {
-        "genre_name" : "Comedy",
-        "genre_description": "Comedy is a genre of fiction that consists of discourses or works intended to be humorous or amusing by inducing laughter."
-    },
-    {
-        "genre_name" : "Drama",
-        "genre_description": "The drama genre features stories with high stakes and many conflicts. They're plot-driven and demand that every character and scene move the story forward. Dramas follow a clearly defined narrative plot structure, portraying real-life scenarios or extreme situations with emotionally-driven characters."
-    },
-    {
-        "genre_name" : "Sci-Fi",
-        "genre_description": "Science fiction, popularly shortened as sci-fi, is a genre of fiction that creatively depicts real or imaginary science and technology as part of its plot, setting, or theme. The fiction part of science fiction means, of course, that it's a fictional story—not a real-life account."
-    }
-];
-
-let directors = [
-    {
-        "name": "Quentin Tarantino",
-        "bio": "Quentin Tarantino is an American film director, writer, producer, and actor. His films are characterized by frequent references to popular culture and film genres, non-linear storylines, dark humor, stylized violence, extended dialogue, pervasive use of profanity, cameos and ensemble casts.",
-        "birth year": "1963",
-        "death year": null
-    },
-    {
-        "name": "Martin Scorsese",
-        "bio": "is an American film director, producer, screenwriter and actor. Scorsese emerged as one of the major figures of the New Hollywood era. He is the recipient of many major accolades, including an Academy Award, four BAFTA Awards, three Emmy Awards, a Grammy Award, three Golden Globe Awards, and two Directors Guild of America Awards. He has been honored with the AFI Life Achievement Award in 1997, the Film Society of Lincoln Center tribute in 1998, the Kennedy Center Honor in 2007, the Cecil B. DeMille Award in 2010, and the BAFTA Fellowship in 2012. Five of his films have been inducted into the National Film Registry by the Library of Congress as 'culturally, historically or aesthetically significant'.",
-        "birth year": "1942",
-        "death year": null
-    },
-    {
-        "name": "Alfred Hitchcock",
-        "bio": "Sir Alfred Hitchcock was an English filmmaker. He is widely regarded as one of the most influential figures in the history of cinema.[1] In a career spanning six decades, he directed over 50 feature films,[a] many of which are still widely watched and studied today. Known as the 'Master of Suspense', he became as well known as any of his actors thanks to his many interviews, his cameo roles in most of his films, and his hosting and producing the television anthology Alfred Hitchcock Presents (1955–65). His films garnered 46 Academy Award nominations, including six wins, although he never won the award for Best Director despite five nominations.",
-        "birth year": "1899",
-        "death year": "1980"
-    }
-];
-
-let users = [
-    {
-        "userID": 1,
-        "first_name": "Anne",
-        "last_name": "Brown",
-        "username": "anne234",
-        "email_address": "anne234@email.com",
-        "favorite_movies": []
-    },
-    {
-        "userID": 2,
-        "first_name": "George",
-        "last_name": "Smith",
-        "username": "george_smith",
-        "email_address": "george_smith@email.com",
-        "favorite_movies": []
-    },
-    {
-        "userID": 3,
-        "first_name": "Lucy",
-        "last_name": "Doe",
-        "username": "LucyGoosey84",
-        "email_address": "lucygoosey84@email.com",
-        "favorite_movies": []
-    }
-];
 
 //GET request for default resposnse at "/" endpoint
 app.get('/', (req, res) => {
@@ -138,62 +31,177 @@ app.get('/', (req, res) => {
 
 //GET request for all movies
 app.get('/movies', (req, res) => {
-    res.json(movies);
+    Movies.find()
+        .then((movies) => {
+            res.status(201).json(movies);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);        
+        });
 });
 
 //GET request for a specific movie by title
 app.get('/movies/:title', (req, res) => {
-    res.json(movies.find((movie) => {
-        return movie.title === req.params.title
-    }));
+    Movies.findOne({Title: req.body.Title})
+        .then((movie) => {
+            if(movie){
+                return res.status(201).json(movie);
+            }else{
+                return res.status(400).send('Sorry, ' + req.body.Title + ' is not in our database!');
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        })
 });
 
 //GET request for data about a specific genre
-app.get('/genres/:genre_name', (req, res) => {
-    res.json(genres.find((genre) => {
-        return genre === req.params.genre
-    }));
+app.get('/movies/:genre/:genre_name', (req, res) => {
+    Movies.findOne({'Genre.Name': req.params.genre_name})
+    .then((movie) => {
+        res.status(201).json(movie.Genre);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
 });
 
 //GET request for data on a specific director
-app.get('/directors/:name', (req, res) => {
-    res.json(directors.find((director) => {
-        return director === req.params.director
-    }));
+app.get('/movies/:director/:director_name', (req, res) => {
+    Movies.findOne({'Director.Name': req.params.director_name})
+        .then((movie) => {
+            res.status(201).json(movie.Director);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
 });
 
-//POST request to add new user account
+//Add new user account
 app.post('/users', (req, res) => {
-    let newUser = req.body;
-    if (!newUser.name){
-        const message = 'Missing name in request body';
-        res.status(400).send(message);
-    } else {
-        newUser.id = uuidv4();
-        users.push(newUser);
-        res.status(201).send(newUser);
-    }
+    Users.findOne({Username: req.body.Usesrname})
+        .then((user) => {
+            if (user) {
+                return res.status(400).send(req.body.Username + 'already exists');
+            } else {
+                Users
+                    .create({
+                        Username: req.body.Username,
+                        Password: req.body.Pasword,
+                        Email: req.body.Birthday
+                    })
+                    .then((user) => {res.status(201).json(user)})
+                    .catch((error) => {
+                        console.error(error);
+                        res.status(500).send('Error: ' + error);
+                    })
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Error: ' + error);
+        });
 });
 
-//PUT request to update user information
-app.put('/users/:userID', (req, res) => {
-    res.send('Successfully updated user information');
+//Get all users
+app.get('/users', (req,res) => {
+    Users.find()
+        .then((users) => {
+            res.status(201).json(users);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);        
+        });
 });
 
-//POST request to add movie to users list of favorite movies
-app.post('/users/:userID/favorite_movies', (req, res) => {
-    res.send('Successfully added movie to users favorites list.');
+//Get user by userername
+app.get('/users/:Username', (req, res) => {
+    Users.findOne({Username: req.params.Username})
+    .then((user) => {
+        res.jsjon(user);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
 });
 
-//DELETE request to remove movie from users list of favorite movies
-app.delete('/users/:userID/favorite_movies', (req, res) => {
-    res.send('Successfully removed movie from users favorites list.');
+//Update user information, by username
+app.put('/users/:Username', (req, res) => {
+    Users.findOneAndUpdate({Username: req.params.Username}, 
+        {$set:
+            {
+            Username: req.body.Username,
+            Password: req.body.Password,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday
+            }
+        },
+        {new: true},
+        (err, updatedUser) => {
+            if(err) {
+                console.error(err);
+                res.status(500).send('Error: ' + err);
+            } else {
+                res.json(updatedUser);
+            }
+        });
 });
 
-//DELETE request to remove existing user account
-app.delete('/users/:userID', (req, res) => {
-    res.send('Successfully removed user account.')
-})
+//Update user by adding a movie to users list of favorite movies by username and movieID
+app.put('/users/:Username/movies/:MovieID', (req, res) => {
+    Users.findOneAndUpdate({Username: req.params.Username},
+        {$push:
+            {FavoriteMovies: req.body.MovieID}
+        },
+        {new:true},
+        (err, updatedUser) => {
+            if(err) {
+                console.error(err);
+                res.status(500).send('Error: ' + err);
+            } else {
+                res.json(updatedUser);
+            }
+    });
+});
+
+//DELETE request to remove movie from users list of favorite movies by username and movieID
+app.delete('/users/:Username/:FavoriteMovies', (req, res) => {
+    Users.findOneAndUpdate({Username: req.params.Username},
+        {$pull:
+            {FavoriteMovies: req.body.MovieID}
+        },
+        {new:true},
+        (err, updatedUser) => {
+            if(err) {
+                console.error(err);
+                res.status(500).send('Error: ' + err);
+            } else {
+                res.json(updatedUser);
+            }
+    });
+});
+
+//DELETE request to remove existing user account by username
+app.delete('/users/:Username', (req, res) => {
+    Users.findOneAndRemove({Username: reqparams.Username})
+        .then(user => {
+            if(!user) {
+                req.status(400).send(req.params.Username + ' was not found.');
+            } else {
+                res.status(200).send(req.params.Username + ' was deleted.');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        });
+});
 
 // error handler comes after all route calls and app.use, but before app.listen
 app.use((err,req,res,next) => {
