@@ -58,7 +58,7 @@ app.get('/movies/:title', (req, res) => {
 });
 
 //GET request for data about a specific genre
-app.get('/movies/:genre/:genre_name', (req, res) => {
+app.get('/movies/:genre/:genreName', (req, res) => {
     Movies.findOne({'Genre.Name': req.params.genre_name})
     .then((movie) => {
         res.status(201).json(movie.Genre);
@@ -70,7 +70,7 @@ app.get('/movies/:genre/:genre_name', (req, res) => {
 });
 
 //GET request for data on a specific director
-app.get('/movies/:director/:director_name', (req, res) => {
+app.get('/movies/:director/:directorName', (req, res) => {
     Movies.findOne({'Director.Name': req.params.director_name})
         .then((movie) => {
             res.status(201).json(movie.Director);
@@ -153,11 +153,11 @@ app.put('/users/:Username', (req, res) => {
         });
 });
 
-//Update user by adding a movie to users list of favorite movies by username and movieID
-app.put('/users/:Username/movies/:MovieID', (req, res) => {
+//Update user by adding a movie to users list of favorite movies by username and movieId
+app.put('/users/:Username/favoriteMovies', (req, res) => {
     Users.findOneAndUpdate({Username: req.params.Username},
         {$push:
-            {FavoriteMovies: req.body.MovieID}
+            {FavoriteMovies: req.body.movieId}
         },
         {new:true},
         (err, updatedUser) => {
@@ -171,10 +171,10 @@ app.put('/users/:Username/movies/:MovieID', (req, res) => {
 });
 
 //DELETE request to remove movie from users list of favorite movies by username and movieID
-app.delete('/users/:Username/:FavoriteMovies', (req, res) => {
+app.delete('/users/:Username/favoriteMovies', (req, res) => {
     Users.findOneAndUpdate({Username: req.params.Username},
         {$pull:
-            {FavoriteMovies: req.body.MovieID}
+            {FavoriteMovies: req.body.movieId}
         },
         {new:true},
         (err, updatedUser) => {

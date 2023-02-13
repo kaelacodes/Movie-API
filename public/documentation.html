@@ -72,9 +72,9 @@
 
                             <tr>
                                 <td>Returns data about a specific genre of movie by genre name</td>
-                                <td>/genres/:genre_name</td>
+                                <td>/movies/genre/:genreName</td>
                                 <td>GET</td>
-                                <td>:genre_name</td>
+                                <td>:genreName</td>
                                 <td>None</td>
                                 <td>
                                     <p>A JSON object holding information about a specific genre of movie</p>
@@ -85,9 +85,9 @@
                             
                             <tr>
                                 <td>Returns data about a specific director by name</td>
-                                <td>/directors/:name</td>
+                                <td>/movies/director/:directorName</td>
                                 <td>GET</td>
-                                <td>:name</td>
+                                <td>:directorName</td>
                                 <td>None</td>
                                 <td>
                                     <p>A JSON object holding data about a specific director</p>
@@ -113,9 +113,9 @@
                             
                             <tr>
                                 <td>Allows user to update their account information</td>
-                                <td>/users/:userID</td>
+                                <td>/users/:Username</td>
                                 <td>PUT</td>
-                                <td>:userID</td>
+                                <td>:Username</td>
                                 <td>
                                     <p class="format-example">Example:</p>
                                     <img src="img/SingleUser.jpg" alt="format example">
@@ -128,9 +128,9 @@
 
                             <tr>
                                 <td>Allows existing user to deregister their account</td>
-                                <td>/users/:userID</td>
+                                <td>/users/:Username</td>
                                 <td>DELETE</td>
-                                <td>:userID</td>
+                                <td>:Username</td>
                                 <td>None</td>
                                 <td>
                                     <p>A text message confirming to user that their account has been removed</p>
@@ -140,9 +140,9 @@
                             
                             <tr>
                                 <td>Allows user to to add a movie to their list of favorite movies</td>
-                                <td>/users/:userID/favorite_movies</td>
+                                <td>/users/:Username/favoriteMovies</td>
                                 <td>POST</td>
-                                <td>:userID</td>
+                                <td>:Username</td>
                                 <td>
                                     <p class="format-example">Example:</p>
                                     <img src="img/SingleMovie.jpg" alt="format example">
@@ -155,9 +155,9 @@
 
                             <tr>
                                 <td>Allows user to to remove a movie from their list of favorite movies</td>
-                                <td>/users/:userID/favorite_movies</td>
+                                <td>/users/:Username/favoriteMovies</td>
                                 <td>DELETE</td>
-                                <td>:userID</td>
+                                <td>:Username</td>
                                 <td>None</td>
                                 <td>
                                     <p>A text message confirming to user that the movie has been removed from their list of favorite movies</p>
