@@ -140,9 +140,9 @@
                             
                             <tr>
                                 <td>Allows user to to add a movie to their list of favorite movies</td>
-                                <td>/users/:Username/favoriteMovies</td>
+                                <td>/users/:Username/favoriteMovies/:MovieID</td>
                                 <td>POST</td>
-                                <td>:Username</td>
+                                <td>:Username, :MovieID</td>
                                 <td>
                                     <p class="format-example">Example:</p>
                                     <img src="img/SingleMovie.jpg" alt="format example">
@@ -155,9 +155,9 @@
 
                             <tr>
                                 <td>Allows user to to remove a movie from their list of favorite movies</td>
-                                <td>/users/:Username/favoriteMovies</td>
+                                <td>/users/:Username/favoriteMovies/:MovieID</td>
                                 <td>DELETE</td>
-                                <td>:Username</td>
+                                <td>:Username, :MovieID</td>
                                 <td>None</td>
                                 <td>
                                     <p>A text message confirming to user that the movie has been removed from their list of favorite movies</p>
