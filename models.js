@@ -1,30 +1,30 @@
 const mongoose = require('mongoose');
 
 let movieSchema = mongoose.Schema({
-    Title: {type: String, required: true},
-    Description: {type: String, required: true},
-    Genre: {
-        Name: String,
-        Description: String
+    title: {type: String, required: true},
+    description: {type: String, required: true},
+    genre: {
+        genre_name: String,
+        genre_description: String
     },
-    Director: {
-        Name: String,
-        Bio: String,
-        BirthYear: Date,
-        DeathYear: Date
+    director: {
+        name: String,
+        bio: String,
+        birth_year: Date,
+        death_year: Date
     },
-    Featured: Boolean,
-    ImageUrl: String,
+    featured: Boolean,
+    imageUrl: String,
 });
 
 let userSchema = mongoose.Schema({
-    FirstName: {type: String, required: true},
-    LastName: {type:String, required: true},
-    Username: {type: String, required: true},
-    Password: {type: String, required: true},
-    FavoriteMovies: [{type: mongoose.Schema.Types.ObjectId, ref: 'Movie'}],
-    Email: {type: String, required: true},
-    Birthday: {type: Date}
+    first_name: {type: String, required: true},
+    last_name: {type:String, required: true},
+    username: {type: String, required: true},
+    password: {type: String, required: true},
+    favorite_movies: [{type: mongoose.Schema.Types.ObjectId, ref: 'Movie'}],
+    email: {type: String, required: true},
+    birthday: {type: Date, required: true}
 });
 
 let Movie = mongoose.model('Movie', movieSchema);

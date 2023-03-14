@@ -59,9 +59,9 @@ app.get('/movies/:Title', (req, res) => {
 
 //GET request for data about a specific genre by genre name
 app.get('/movies/genre/:genreName', (req, res) => {
-    Movies.findOne({'Genre.Name': req.params.genreName})
+    Movies.findOne({'genre.genre_name': req.params.genreName})
         .then((movie) => {
-            res.status(201).json(movie.Genre);
+            res.status(201).json(movie.genre);
         })
         .catch((err) => {
             console.error(err);
@@ -69,15 +69,27 @@ app.get('/movies/genre/:genreName', (req, res) => {
         });
 });
 
-//GET request for data on a specific director
+//GET request for data on a specific director by directors name
 app.get('/movies/director/:directorName', (req, res) => {
-    Movies.findOne({'Director.Name': req.params.directorName})
+    Movies.findOne({'director.name': req.params.directorName})
         .then((movie) => {
-            res.status(201).json(movie.Director);
+            res.status(201).json(movie.director);
         })
         .catch((err) => {
             console.error(err);
             res.status(500).send('Error: ' + err);
+        });
+});
+
+//Get all users
+app.get('/users', (req,res) => {
+    Users.find()
+        .then((users) => {
+            res.status(201).json(users);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);        
         });
 });
 
@@ -107,18 +119,6 @@ app.post('/users', (req, res) => {
         .catch((error) => {
             console.error(error);
             res.status(500).send('Error: ' + error);
-        });
-});
-
-//Get all users
-app.get('/users', (req,res) => {
-    Users.find()
-        .then((users) => {
-            res.status(201).json(users);
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).send('Error: ' + err);        
         });
 });
 
@@ -205,6 +205,11 @@ app.delete('/users/:Username', (req, res) => {
             res.status(500).send('Error: ' + err);
         });
 });
+
+// GET request for documentation
+app.get('/documentation', (req, res) => {                  
+    res.sendFile('public/documentation.html', { root: __dirname });
+    });
 
 // error handler comes after all route calls and app.use, but before app.listen
 app.use((err,req,res,next) => {
