@@ -1,12 +1,11 @@
 // Imports all required packages
-const express = require('express'),
-    bodyParser = require('body-parser'),
-    morgan = require('morgan'),
-    fs = require('fs'),
-    path = require('path'),
-    uuid = require('uuid');
-
+const bodyParser = require('body-parser');
+const express = require('express');
 const app = express();
+const uuid = require('uuid');
+const morgan = require('morgan');
+const fs = require('fs');
+const path = require('path');
 
 //Integrates Mongoose and defined models into REST API
 const mongoose = require('mongoose');
@@ -43,12 +42,12 @@ app.get('/movies', (req, res) => {
 
 //GET request for a specific movie by title
 app.get('/movies/:title', (req, res) => {
-    Movies.findOne({title: req.body.title})
+    Movies.findOne({'title': req.params.title})
         .then((movie) => {
             if(movie){
                 return res.status(201).json(movie);
             }else{
-                return res.status(400).send('Sorry, ' + req.body.title + ' is not in our database!');
+                return res.status(400).send('Sorry, ' + req.params.title + ' is not in our database!');
             }
         })
         .catch((err) => {
@@ -100,7 +99,7 @@ app.post('/users', (req, res) => {
     Users.findOne({'username': req.body.username})
         .then((user) => {
             if (user) {
-                return res.status(400).send(req.body.Username + ' already exists');
+                return res.status(400).send(req.body.username + ' already exists');
             } else {
                 Users
                     .create({
@@ -108,6 +107,7 @@ app.post('/users', (req, res) => {
                         last_name: req.body.last_name,
                         username: req.body.username,
                         password: req.body.password,
+                        favorite_movies: req.body.favorite_movies,
                         email: req.body.email,
                         birthday: req.body.birthday
                     })
@@ -138,7 +138,7 @@ app.get('/users/:username', (req, res) => {
 
 //Update user information, by username
 app.put('/users/:username', (req, res) => {
-    Users.findOneAndUpdate({username: req.params.username}, 
+    Users.findOneAndUpdate({'username': req.params.username}, 
         {$set:
             {
                 username: req.body.username,
@@ -162,9 +162,9 @@ app.put('/users/:username', (req, res) => {
 app.post('/users/:username/favorite_movies/:MovieID', (req, res) => {
     Users.findOneAndUpdate({'username': req.params.username},
         {$push:
-            {favorite_movies: req.body.MovieID}
+            {favorite_movies: req.params.MovieID}
         },
-        {new:true},
+        {new: true},
         (err, updatedUser) => {
             if(err) {
                 console.error(err);
@@ -179,7 +179,7 @@ app.post('/users/:username/favorite_movies/:MovieID', (req, res) => {
 app.delete('/users/:username/favorite_movies/:MovieID', (req, res) => {
     Users.findOneAndUpdate({'username': req.params.username},
         {$pull:
-            {favorite_movies: req.body.MovieID}
+            {favorite_movies: req.params.MovieID}
         },
         {new:true},
         (err, updatedUser) => {

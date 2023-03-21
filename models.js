@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const { default: mongoose} = require("mongoose");
 
 let movieSchema = mongoose.Schema({
     title: {type: String, required: true},
@@ -14,7 +14,7 @@ let movieSchema = mongoose.Schema({
         death_year: Date
     },
     featured: Boolean,
-    imageUrl: String,
+    imageUrl: String
 });
 
 let userSchema = mongoose.Schema({
