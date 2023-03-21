@@ -276,3 +276,12 @@
 ::1 - - [21/Mar/2023:21:45:18 +0000] "GET /users HTTP/1.1" 201 2389
 ::1 - - [21/Mar/2023:21:45:25 +0000] "DELETE /users/daveknowsmovies8 HTTP/1.1" 200 42
 ::1 - - [21/Mar/2023:21:45:31 +0000] "POST /users HTTP/1.1" 500 308
+::1 - - [21/Mar/2023:21:50:30 +0000] "GET /users HTTP/1.1" 201 2389
+::1 - - [21/Mar/2023:21:50:57 +0000] "DELETE /users/daveknowsmovies8 HTTP/1.1" 200 42
+::1 - - [21/Mar/2023:21:52:02 +0000] "PUT /users/annebrown85 HTTP/1.1" 200 4
+::1 - - [21/Mar/2023:21:52:46 +0000] "PUT /users/annebrown85 HTTP/1.1" 200 4
+::1 - - [21/Mar/2023:21:52:53 +0000] "GET /users HTTP/1.1" 201 2080
+::1 - - [21/Mar/2023:21:54:52 +0000] "PUT /users/Andrews5 HTTP/1.1" 200 297
+::1 - - [21/Mar/2023:21:56:06 +0000] "POST /users/mwags78/favorite_movies/63dc4e00d732b28eb9dff9b6 HTTP/1.1" 200 337
+::1 - - [21/Mar/2023:21:56:35 +0000] "GET /users HTTP/1.1" 201 2105
+::1 - - [21/Mar/2023:21:57:01 +0000] "DELETE /users/mwags78/favorite_movies/63dc536bd732b28eb9dff9b8 HTTP/1.1" 200 310
