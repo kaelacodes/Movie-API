@@ -50,11 +50,11 @@
                                 <td>GET</td>
                                 <td>None</td>
                                 <td>None</td>
-                                <td>A JSON object holding data about all movies</td>
+                                <td>A series of JSON objects holding data about all movies in database</td>
                             </tr>
 
                             <tr>
-                                <td>Returns data about a specific movie by title</td>
+                                <td>Returns data about a specific movie, by title</td>
                                 <td>/movies/:title</td>
                                 <td>GET</td>
                                 <td>:title</td>
@@ -63,17 +63,35 @@
                             </tr>
 
                             <tr>
-                                <td>Returns data about a specific genre of movie by genre name</td>
+                                <td>Returns data about all movies of a specific genre, by genre name</td>
                                 <td>/movies/genre/:genre_name</td>
+                                <td>GET</td>
+                                <td>:genre_name</td>
+                                <td>None</td>
+                                <td>A series of JSON objects holding information about all movies in database that are a specific genre</td>
+                            </tr>
+
+                            <tr>
+                                <td>Returns data about a specific genre of movie, by genre name</td>
+                                <td>/genre/:genre_name</td>
                                 <td>GET</td>
                                 <td>:genre_name</td>
                                 <td>None</td>
                                 <td>A JSON object holding information about a specific genre of movie</td>
                             </tr>
+
+                            <tr>
+                                <td>Returns data about all movies by a specific director, by director name</td>
+                                <td>/movies/genre/:director_name</td>
+                                <td>GET</td>
+                                <td>:director_name</td>
+                                <td>None</td>
+                                <td>A series of JSON objects holding information about all movies in database that are by a specific director</td>
+                            </tr>
                             
                             <tr>
-                                <td>Returns data about a specific director by name</td>
-                                <td>/movies/director/:director_name</td>
+                                <td>Returns data about a specific director, by director name</td>
+                                <td>/director/:director_name</td>
                                 <td>GET</td>
                                 <td>:director_name</td>
                                 <td>None</td>

@@ -285,3 +285,15 @@
 ::1 - - [21/Mar/2023:21:56:06 +0000] "POST /users/mwags78/favorite_movies/63dc4e00d732b28eb9dff9b6 HTTP/1.1" 200 337
 ::1 - - [21/Mar/2023:21:56:35 +0000] "GET /users HTTP/1.1" 201 2105
 ::1 - - [21/Mar/2023:21:57:01 +0000] "DELETE /users/mwags78/favorite_movies/63dc536bd732b28eb9dff9b8 HTTP/1.1" 200 310
+::1 - - [21/Mar/2023:22:10:21 +0000] "GET /genre/Horror HTTP/1.1" 201 439
+::1 - - [21/Mar/2023:22:10:48 +0000] "GET /movies/genre/Drama HTTP/1.1" 201 1845
+::1 - - [21/Mar/2023:22:18:37 +0000] "GET /movies/director/Wes%20Anderson HTTP/1.1" 201 476
+::1 - - [21/Mar/2023:22:18:47 +0000] "GET /director/Wes%20Anderson HTTP/1.1" 201 476
+::1 - - [21/Mar/2023:22:19:04 +0000] "GET /movies/director/Wes%20Anderson HTTP/1.1" 201 476
+::1 - - [21/Mar/2023:22:19:40 +0000] "GET /movies/director/Wes%20Anderson HTTP/1.1" 201 476
+::1 - - [21/Mar/2023:22:19:52 +0000] "GET /movies HTTP/1.1" 201 9870
+::1 - - [21/Mar/2023:22:21:00 +0000] "GET /movies/director/Wes%20Anderson HTTP/1.1" 201 -
+::1 - - [21/Mar/2023:22:21:02 +0000] "GET /movies/director/Wes%20Anderson HTTP/1.1" 201 -
+::1 - - [21/Mar/2023:22:21:04 +0000] "GET /director/Wes%20Anderson HTTP/1.1" 201 476
+::1 - - [21/Mar/2023:22:21:07 +0000] "GET /movies/director/Wes%20Anderson HTTP/1.1" 201 -
+::1 - - [21/Mar/2023:22:21:35 +0000] "GET /movies/director/Wes%20Anderson HTTP/1.1" 201 2214
