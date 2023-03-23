@@ -297,3 +297,9 @@
 ::1 - - [21/Mar/2023:22:21:04 +0000] "GET /director/Wes%20Anderson HTTP/1.1" 201 476
 ::1 - - [21/Mar/2023:22:21:07 +0000] "GET /movies/director/Wes%20Anderson HTTP/1.1" 201 -
 ::1 - - [21/Mar/2023:22:21:35 +0000] "GET /movies/director/Wes%20Anderson HTTP/1.1" 201 2214
+::1 - - [23/Mar/2023:17:55:07 +0000] "GET /movies HTTP/1.1" 401 -
+::1 - - [23/Mar/2023:17:56:57 +0000] "POST /users HTTP/1.1" 201 228
+::1 - - [23/Mar/2023:18:00:04 +0000] "POST /login?username=kaelacode48&passowrd=kcoder4984 HTTP/1.1" 400 49
+::1 - - [23/Mar/2023:18:00:24 +0000] "POST /login?username=kaelacode48&password=kcoder4984 HTTP/1.1" 400 49
+::1 - - [23/Mar/2023:18:01:19 +0000] "POST /login?username=kaelacodes48&password=kcoder4984 HTTP/1.1" 200 707
+::1 - - [23/Mar/2023:18:02:31 +0000] "GET /movies HTTP/1.1" 201 9870
