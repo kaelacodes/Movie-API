@@ -20,8 +20,16 @@ mongoose.connect('mongodb://localhost:27017/myFlixApp', { useNewUrlParser: true,
 const accessLogStream = fs.createWriteStream(path.join(__dirname,'log.txt'), {flags:'a'});
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.use(morgan('common', {stream: accessLogStream}));
+
+//imports 'auth.js' file
+let auth = require('./auth')(app);
+
+//imports Passport module and imports 'passport.js' file
+const passport = require('passport');
+require('./passport');
 
 //GET request for default resposnse at "/" endpoint
 app.get('/', (req, res) => {
