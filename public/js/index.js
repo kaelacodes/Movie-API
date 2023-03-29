@@ -24,10 +24,25 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.use(morgan('common', {stream: accessLogStream}));
 
-//imports 'auth.js' file
+//Imports CORS module and defines allowed origins
+const cors = require('cors');
+let allowedOrigins = ['http;//localhost:8080', 'http://testsite.com'];
+
+app.use(cors({
+    origin: (origin, callback) => {
+        if(!origin) return callback(null, true);
+        if(allowedOrigins.indexOf(origin) === -1){
+            let message = 'The CORS policy for this application doesn"t allow access from origin' + origin;
+            return callback(new Error(message), false);
+        }
+        return callback(null, true);
+    }
+}));
+
+//Imports 'auth.js' file
 let auth = require('./auth')(app);
 
-//imports Passport module and imports 'passport.js' file
+//Imports Passport module 'passport.js' file
 const passport = require('passport');
 require('./passport');
 
@@ -127,7 +142,7 @@ app.get('/users', passport.authenticate('jwt', {session:false}), (req,res) => {
 
 //Add new user account
 app.post('/users', (req, res) => {
-    console.log(req.body)
+    let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOne({'username': req.body.username})
         .then((user) => {
             if (user) {
@@ -138,7 +153,7 @@ app.post('/users', (req, res) => {
                         first_name: req.body.first_name,
                         last_name: req.body.last_name,
                         username: req.body.username,
-                        password: req.body.password,
+                        password: hashedPassword,
                         favorite_movies: req.body.favorite_movies,
                         email: req.body.email,
                         birthday: req.body.birthday
@@ -170,11 +185,12 @@ app.get('/users/:username', passport.authenticate('jwt', {session:false}), (req,
 
 //Update user information, by username
 app.put('/users/:username', passport.authenticate('jwt', {session:false}), (req, res) => {
+    let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOneAndUpdate({'username': req.params.username}, 
         {$set:
             {
                 username: req.body.username,
-                password: req.body.password,
+                password: hashedPassword,
                 email: req.body.email,
                 birthday: req.body.birthday
             }
