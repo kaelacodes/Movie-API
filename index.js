@@ -154,7 +154,7 @@ app.post('/users', [
     //Checks validation object for errors
     let errors = validationResult(req);
     if(!errors.isEmpty()){
-        return res.status(422).json({errors.array()});
+        return res.status(422).json({errors: errors.array() });
     }
     //Hashes password
     let hashedPassword = Users.hashPassword(req.body.Password);
@@ -191,7 +191,7 @@ app.post('/users', [
 app.get('/users/:username', passport.authenticate('jwt', {session:false}), (req, res) => {
     let errors = validationResult(req);
     if(!errors.isEmpty()){
-        return res.status(422).json({errors.array()});
+        return res.status(422).json({errors: errors.array()});
     }
 
     Users.findOne({'username': req.params.username})
