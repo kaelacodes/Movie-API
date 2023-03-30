@@ -6,6 +6,7 @@ const uuid = require('uuid');
 const morgan = require('morgan');
 const fs = require('fs');
 const path = require('path');
+const bcrypt = require('bcrypt');
 const port = process.env.PORT || 8080;
 
 //Integrates Mongoose and defined models into REST API
