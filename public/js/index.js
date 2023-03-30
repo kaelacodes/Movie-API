@@ -6,7 +6,7 @@ const uuid = require('uuid');
 const morgan = require('morgan');
 const fs = require('fs');
 const path = require('path');
-const PORT = process.env.PORT || 8080;
+const port = process.env.PORT || 8080;
 
 //Integrates Mongoose and defined models into REST API
 const mongoose = require('mongoose');
@@ -301,6 +301,6 @@ app.use((err,req,res,next) => {
 });
 
 // listen for requests
-app.listen(PORT, () => {
-    console.log('Your app is listening on port' + PORT);
+app.listen(port, '0.0.0.0', () => {
+    console.log('Your app is listening on Port' + port);
 });
