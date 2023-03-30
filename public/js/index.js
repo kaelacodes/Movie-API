@@ -6,6 +6,7 @@ const uuid = require('uuid');
 const morgan = require('morgan');
 const fs = require('fs');
 const path = require('path');
+const PORT = process.env.PORT || 8080;
 
 //Integrates Mongoose and defined models into REST API
 const mongoose = require('mongoose');
@@ -45,6 +46,9 @@ let auth = require('./auth')(app);
 //Imports Passport module 'passport.js' file
 const passport = require('passport');
 require('./passport');
+
+//Imports validation libray for Node.js/Express validation
+const {check, validationResult} = require('express-validator');
 
 //GET request for default resposnse at "/" endpoint
 app.get('/', (req, res) => {
@@ -141,8 +145,20 @@ app.get('/users', passport.authenticate('jwt', {session:false}), (req,res) => {
 });
 
 //Add new user account
-app.post('/users', (req, res) => {
+app.post('/users', [
+    check('username', 'Username is required.').isLength({min:5}),
+    check('username', 'Username contains non-alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('password', 'Password is required.').not().isEmpty(),
+    check('email', 'Email does not appear to be valid.').isEmail()
+], (req, res) => {
+    //Checks validation object for errors
+    let errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(422).json({errors.array()});
+    }
+    //Hashes password
     let hashedPassword = Users.hashPassword(req.body.Password);
+
     Users.findOne({'username': req.body.username})
         .then((user) => {
             if (user) {
@@ -173,6 +189,11 @@ app.post('/users', (req, res) => {
 
 //Get user by userername
 app.get('/users/:username', passport.authenticate('jwt', {session:false}), (req, res) => {
+    let errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(422).json({errors.array()});
+    }
+
     Users.findOne({'username': req.params.username})
     .then((user) => {
         res.json(user);
@@ -184,8 +205,20 @@ app.get('/users/:username', passport.authenticate('jwt', {session:false}), (req,
 });
 
 //Update user information, by username
-app.put('/users/:username', passport.authenticate('jwt', {session:false}), (req, res) => {
+app.put('/users/:username', passport.authenticate('jwt', {session:false}), [
+    check('username', 'Username is required.').isLength({min:5}),
+    check('username', 'Username contains non-alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('password', 'Password is required.').not().isEmpty(),
+    check('email', 'Email does not appear to be valid.').isEmail()
+], (req, res) => {
+    //Checks validation object for errors
+    let errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(422).json({errors.array()});
+    }
+    //Hashes password
     let hashedPassword = Users.hashPassword(req.body.Password);
+
     Users.findOneAndUpdate({'username': req.params.username}, 
         {$set:
             {
@@ -268,6 +301,6 @@ app.use((err,req,res,next) => {
 });
 
 // listen for requests
-app.listen(8080, () => {
-    console.log('Your app is listening on port 8080.');
+app.listen(PORT, () => {
+    console.log('Your app is listening on port' + PORT);
 });
