@@ -148,12 +148,13 @@ app.get('/users', passport.authenticate('jwt', {session:false}), (req,res) => {
 });
 
 //Add new user account
-app.post('/users', [
+app.post('/users', 
+    [
     check('username', 'Username is required.').isLength({min:5}),
     check('username', 'Username contains non-alphanumeric characters - not allowed.').isAlphanumeric(),
     check('password', 'Password is required.').not().isEmpty(),
     check('email', 'Email does not appear to be valid.').isEmail()
-], (req, res) => {
+    ], (req, res) => {
     //Checks validation object for errors
     let errors = validationResult(req);
     if(!errors.isEmpty()){
@@ -162,7 +163,7 @@ app.post('/users', [
     //Hashes password
     let hashedPassword = Users.hashPassword(req.body.password);
 
-    Users.findOne({'username': req.body.username})
+    Users.findOne({username: req.body.username})
         .then((user) => {
             if (user) {
                 return res.status(400).send(req.body.username + ' already exists');
