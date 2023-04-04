@@ -160,7 +160,7 @@ app.post('/users', [
         return res.status(422).json({errors: errors.array() });
     }
     //Hashes password
-    let hashedPassword = Users.hashPassword(req.body.Password);
+    let hashedPassword = Users.hashPassword(req.body.password);
 
     Users.findOne({'username': req.body.username})
         .then((user) => {
