@@ -30,7 +30,7 @@ app.use(morgan('common', {stream: accessLogStream}));
 
 //Imports CORS module and defines allowed origins
 const cors = require('cors');
-let allowedOrigins = ['http;//localhost:8080', 'http://testsite.com'];
+let allowedOrigins = ['http://localhost:8080', 'https://myflixapi-koyl.onrender.com/'];
 
 app.use(cors({
     origin: (origin, callback) => {
