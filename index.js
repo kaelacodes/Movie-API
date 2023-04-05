@@ -191,7 +191,7 @@ app.post('/users',
         });
 });
 
-//Get user by userername
+//Get user by username
 app.get('/users/:username', passport.authenticate('jwt', {session:false}), (req, res) => {
     let errors = validationResult(req);
     if(!errors.isEmpty()){
@@ -209,21 +209,22 @@ app.get('/users/:username', passport.authenticate('jwt', {session:false}), (req,
 });
 
 //Update user information, by username
-app.put('/users/:username', passport.authenticate('jwt', {session:false}), [
+app.put('/users/:username', passport.authenticate('jwt', {session:false}), 
+    [
     check('username', 'Username is required.').isLength({min:5}),
     check('username', 'Username contains non-alphanumeric characters - not allowed.').isAlphanumeric(),
     check('password', 'Password is required.').not().isEmpty(),
     check('email', 'Email does not appear to be valid.').isEmail()
-], (req, res) => {
+    ], (req, res) => {
     //Checks validation object for errors
     let errors = validationResult(req);
     if(!errors.isEmpty()){
-        return res.status(422).json({errors: errors.array()});
+        return res.status(422).json({errors: errors.array() });
     }
     //Hashes password
-    let hashedPassword = Users.hashPassword(req.body.Password);
+    let hashedPassword = Users.hashPassword(req.body.password);
 
-    Users.findOneAndUpdate({'username': req.params.username}, 
+    Users.findOneAndUpdate({username: req.params.username}, 
         {$set:
             {
                 username: req.body.username,
