@@ -40,6 +40,7 @@ To build the server-side component of a “movies” web application. The web ap
 * GET - /movies/director/:director_name - Returns a list of movies by a specific director by name
 * GET - /users - Returns a list of ALL users for admin purposes
 * POST - /users - Allows new users to register
+* POST - /login?username=johndoe58&password=johnsexamplepassword1234 - Allows user to login with their username and password as parameters
 * PUT - /users/:username - Allows users to update their user info (username, password, email, date of birth)
 * POST - /users/:username/favorite_movies/:MovieID - Allows users to add a movie to their list of favorites
 * DELETE - /users/:username/favorite_movies/:MovieID - Allows users to remove a movie from their list of favorites
